@@ -1,0 +1,22 @@
+{
+  "name": "dist",
+  "authors": [
+    "mishan <mishan@keeneye.solutions>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "fontawesome": "^5.2.0",
+    "jquery": "^3.3.1",
+    "bootstrap": "^4.1.3"
+  }
+}
