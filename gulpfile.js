@@ -3,6 +3,9 @@ const imagemin = require('gulp-imagemin');
 const uglify = require('gulp-uglify');
 const sass = require('gulp-sass');
 const concat = require('gulp-concat');
+const connect = require('gulp-connect');
+//const browserSync = require('browser-sync');
+//const livereload = require('gulp-livereload');
 
 /*
  -- Top Level Functions --
@@ -20,7 +23,8 @@ gulp.task('message', function(){
 // Copy all html files
 gulp.task('copyHtml', function(){
     gulp.src('src/*.html')
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist'))
+        .pipe(connect.reload());
 });
 
 // Minify JS
@@ -53,7 +57,8 @@ gulp.task('scripts', function(){
 });
 
 // Run All command
-gulp.task('default',['message','copyHtml', 'imageMin', 'sass', 'scripts']);
+//gulp.task('default',['message','copyHtml', 'imageMin', 'sass', 'scripts']);
+gulp.task('default', ['connect', 'watch']);
 
 // Watch for file changes
 gulp.task('watch', function(){
@@ -61,4 +66,14 @@ gulp.task('watch', function(){
     gulp.watch('src/images/*', ['imageMin']);
     gulp.watch('src/sass/*.scss', ['sass']);
     gulp.watch('src/*.html', ['copyHtml']);
+});
+
+gulp.task('connect', function(){
+    
+    connect.server({
+        root: 'dist',
+        port: 8888,
+        livereload: true
+    });
+    
 });
