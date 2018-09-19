@@ -23,11 +23,11 @@
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amrgunaweera/gulp-boilerplate.git"
+    "url": "git+https://github.com/amrgunaweera/bootstrap4-gulp-boilerplate.git"
   },
   "bugs": {
-    "url": "https://github.com/amrgunaweera/gulp-boilerplate/issues"
+    "url": "https://github.com/amrgunaweera/bootstrap4-gulp-boilerplate.git/issues"
   },
-  "homepage": "https://github.com/amrgunaweera/gulp-boilerplate#readme",
+  "homepage": "https://github.com/amrgunaweera/bootstrap4-gulp-boilerplate#readme",
   "description": ""
 }
