@@ -3,9 +3,7 @@ const imagemin = require('gulp-imagemin');
 const uglify = require('gulp-uglify');
 const sass = require('gulp-sass');
 const concat = require('gulp-concat');
-const connect = require('gulp-connect');
-//const browserSync = require('browser-sync');
-//const livereload = require('gulp-livereload');
+const browserSync = require('browser-sync').create();
 
 /*
  -- Top Level Functions --
@@ -24,7 +22,7 @@ gulp.task('message', function(){
 gulp.task('copyHtml', function(){
     gulp.src('src/*.html')
         .pipe(gulp.dest('dist'))
-        .pipe(connect.reload());
+        .pipe(browserSync.stream());
 });
 
 // Minify JS
@@ -43,37 +41,50 @@ gulp.src('src/img/*')
 
 // Compile Sass
 gulp.task('sass', function(){
-   gulp.src('src/sass/*.scss')
+   gulp.src([
+       //'node_modules/bootstrap/scss/bootstrap.scss',
+       'src/sass/*.scss'
+    ])
        .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-       .pipe(gulp.dest('dist/css'));
+       .pipe(gulp.dest('dist/css'))
+       .pipe(browserSync.stream());
 });
 
 // Scripts
 gulp.task('scripts', function(){
-    gulp.src('src/js/*.js')
+    gulp.src([
+        'node_modules/jquery/dist/jquery.js',
+        'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
+        'src/js/*.js'
+    ])
         .pipe(concat('main.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('dist/js'));
+        //.pipe(uglify())
+        .pipe(gulp.dest('dist/js'))
+        .pipe(browserSync.stream());
 });
 
 // Run All command
 //gulp.task('default',['message','copyHtml', 'imageMin', 'sass', 'scripts']);
-gulp.task('default', ['connect', 'watch']);
+gulp.task('default', ['browser-sync']);
 
 // Watch for file changes
-gulp.task('watch', function(){
+/* gulp.task('watch', function(){
     gulp.watch('src/js/*.js', ['scripts']);
     gulp.watch('src/images/*', ['imageMin']);
     gulp.watch('src/sass/*.scss', ['sass']);
     gulp.watch('src/*.html', ['copyHtml']);
-});
+}); */
 
-gulp.task('connect', function(){
-    
-    connect.server({
-        root: 'dist',
-        port: 8888,
-        livereload: true
+// Static server
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        server: {
+            baseDir: "./dist"
+        }
     });
-    
+
+    gulp.watch('src/js/*.js', ['scripts']);
+    gulp.watch('src/images/*', ['imageMin']);
+    gulp.watch('src/sass/*.scss', ['sass']);
+    gulp.watch('src/*.html', ['copyHtml']);
 });
